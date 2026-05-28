@@ -4,7 +4,7 @@
 -- ============================================
 
 CREATE TABLE IF NOT EXISTS public.bank_reconciliation_chat_sessions (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   conta_bancaria_id UUID REFERENCES public.contas_bancarias(id) ON DELETE SET NULL,
@@ -29,7 +29,7 @@ CREATE TRIGGER update_bank_reconciliation_chat_sessions_updated_at
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TABLE IF NOT EXISTS public.bank_reconciliation_chat_messages (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   session_id UUID NOT NULL REFERENCES public.bank_reconciliation_chat_sessions(id) ON DELETE CASCADE,
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   role TEXT NOT NULL CHECK (role IN ('user', 'assistant')),
@@ -47,7 +47,7 @@ CREATE INDEX IF NOT EXISTS idx_bank_reconciliation_chat_messages_empresa_created
   ON public.bank_reconciliation_chat_messages (empresa_id, created_at DESC);
 
 CREATE TABLE IF NOT EXISTS public.bank_reconciliation_chat_action_idempotency (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   idempotency_key TEXT NOT NULL,

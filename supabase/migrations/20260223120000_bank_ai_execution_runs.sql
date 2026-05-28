@@ -4,7 +4,7 @@
 -- ============================================
 
 CREATE TABLE IF NOT EXISTS public.bank_ai_execution_runs (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   conta_bancaria_id UUID NOT NULL REFERENCES public.contas_bancarias(id) ON DELETE CASCADE,
   extrato_import_id UUID NOT NULL REFERENCES public.extratos_import(id) ON DELETE CASCADE,

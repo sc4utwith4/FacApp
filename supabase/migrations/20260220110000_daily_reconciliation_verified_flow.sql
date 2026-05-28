@@ -35,7 +35,7 @@ GRANT EXECUTE ON FUNCTION public.is_admin_or_financeiro(UUID) TO authenticated, 
 -- 1) Tabela canonica de itens financeiros conciliaveis
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.conciliacao_itens_financeiros (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   conta_bancaria_id UUID NOT NULL REFERENCES public.contas_bancarias(id) ON DELETE CASCADE,
   data DATE NOT NULL,
@@ -82,7 +82,7 @@ CREATE TRIGGER update_conciliacao_itens_financeiros_updated_at
 -- 2) Resolucao explicita de pendencia de extrato
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.conciliacao_extrato_resolucoes (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   extrato_transacao_id UUID NOT NULL REFERENCES public.extrato_transacoes(id) ON DELETE CASCADE,
   status TEXT NOT NULL CHECK (status IN ('ignored_justified')),
@@ -107,7 +107,7 @@ CREATE TRIGGER update_conciliacao_extrato_resolucoes_updated_at
 -- 3) Fechamento diario por conta
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.conciliacao_fechamentos_diarios (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   conta_bancaria_id UUID NOT NULL REFERENCES public.contas_bancarias(id) ON DELETE CASCADE,
   data_referencia DATE NOT NULL,

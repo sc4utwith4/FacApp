@@ -4,7 +4,7 @@
 
 -- 1) Arquivos de extrato importados
 CREATE TABLE IF NOT EXISTS public.extratos_import (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   conta_bancaria_id UUID NOT NULL REFERENCES public.contas_bancarias(id) ON DELETE CASCADE,
   source TEXT NOT NULL CHECK (source IN ('bradesco', 'itau', 'ofx_generic')),
@@ -45,7 +45,7 @@ CREATE TRIGGER update_extratos_import_updated_at
 
 -- 2) Transacoes normalizadas do extrato
 CREATE TABLE IF NOT EXISTS public.extrato_transacoes (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   extrato_import_id UUID NOT NULL REFERENCES public.extratos_import(id) ON DELETE CASCADE,
   conta_bancaria_id UUID NOT NULL REFERENCES public.contas_bancarias(id) ON DELETE CASCADE,
@@ -92,7 +92,7 @@ CREATE TRIGGER update_extrato_transacoes_updated_at
 
 -- 3) Conciliacoes
 CREATE TABLE IF NOT EXISTS public.conciliacoes_bancarias (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   extrato_transacao_id UUID NOT NULL REFERENCES public.extrato_transacoes(id) ON DELETE CASCADE,
   lancamento_caixa_id UUID NOT NULL REFERENCES public.lancamentos_caixa(id) ON DELETE CASCADE,
@@ -130,7 +130,7 @@ CREATE TRIGGER update_conciliacoes_bancarias_updated_at
 
 -- 4) Regras de conciliacao
 CREATE TABLE IF NOT EXISTS public.regras_conciliacao (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   conta_bancaria_id UUID REFERENCES public.contas_bancarias(id) ON DELETE CASCADE,
 
@@ -163,7 +163,7 @@ CREATE TRIGGER update_regras_conciliacao_updated_at
 
 -- 5) Idempotencia de criacao + conciliacao
 CREATE TABLE IF NOT EXISTS public.conciliacao_bank_idempotency (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   idempotency_key TEXT NOT NULL,
   lancamento_caixa_id UUID REFERENCES public.lancamentos_caixa(id) ON DELETE SET NULL,

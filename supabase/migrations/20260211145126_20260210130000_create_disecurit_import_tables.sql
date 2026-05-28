@@ -4,7 +4,7 @@
 
 -- 1) Tabela principal de arquivos importados
 CREATE TABLE IF NOT EXISTS public.operation_import_files (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   source TEXT NOT NULL DEFAULT 'disecurit',
   file_storage_bucket TEXT NOT NULL DEFAULT 'operacoes-disecurit-pdf',
@@ -44,7 +44,7 @@ CREATE TRIGGER update_operation_import_files_updated_at
 
 -- 2) Tabela de auditoria de integrações
 CREATE TABLE IF NOT EXISTS public.integration_audit_log (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   import_file_id UUID REFERENCES public.operation_import_files(id) ON DELETE SET NULL,
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   source TEXT NOT NULL DEFAULT 'disecurit',
@@ -63,7 +63,7 @@ CREATE INDEX IF NOT EXISTS idx_integration_audit_log_created_at ON public.integr
 
 -- 3) Tabela de documentos/títulos persistidos após criação da operação
 CREATE TABLE IF NOT EXISTS public.operation_import_documents (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   operacao_estoque_id BIGINT NOT NULL REFERENCES public.operacoes_estoque(id) ON DELETE CASCADE,
   import_file_id UUID NOT NULL REFERENCES public.operation_import_files(id) ON DELETE RESTRICT,

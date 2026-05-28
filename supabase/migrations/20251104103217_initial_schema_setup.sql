@@ -11,7 +11,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- Tabela de Empresas
 CREATE TABLE IF NOT EXISTS empresas (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     nome VARCHAR(255) NOT NULL,
     razao_social VARCHAR(255),
     cnpj VARCHAR(18) UNIQUE,
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS bancos (
 
 -- Tabela de Contas Bancárias
 CREATE TABLE IF NOT EXISTS contas_bancarias (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     empresa_id UUID REFERENCES empresas(id) ON DELETE CASCADE NOT NULL,
     banco_id INTEGER REFERENCES bancos(id) ON DELETE SET NULL,
     agencia VARCHAR(20),
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS contas_bancarias (
 
 -- Tabela de Grupos de Contas
 CREATE TABLE IF NOT EXISTS grupos_contas (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     empresa_id UUID REFERENCES empresas(id) ON DELETE CASCADE NOT NULL,
     nome VARCHAR(255) NOT NULL,
     natureza VARCHAR(10) NOT NULL CHECK (natureza IN ('entrada', 'saida')),
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS grupos_contas (
 
 -- Tabela de Clientes
 CREATE TABLE IF NOT EXISTS clientes (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     empresa_id UUID REFERENCES empresas(id) ON DELETE CASCADE NOT NULL,
     tipo VARCHAR(10) NOT NULL CHECK (tipo IN ('fisica', 'juridica')),
     nome VARCHAR(255) NOT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS clientes (
 
 -- Tabela de Fornecedores
 CREATE TABLE IF NOT EXISTS fornecedores (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     empresa_id UUID REFERENCES empresas(id) ON DELETE CASCADE NOT NULL,
     razao_social VARCHAR(255) NOT NULL,
     nome_fantasia VARCHAR(255),
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS fornecedores (
 
 -- Tabela de Lançamentos de Caixa
 CREATE TABLE IF NOT EXISTS lancamentos_caixa (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     empresa_id UUID REFERENCES empresas(id) ON DELETE CASCADE NOT NULL,
     conta_bancaria_id UUID REFERENCES contas_bancarias(id) ON DELETE SET NULL,
     grupo_contas_id UUID REFERENCES grupos_contas(id) ON DELETE SET NULL,
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS lancamentos_caixa (
 
 -- Tabela de Operações Complexas
 CREATE TABLE IF NOT EXISTS operacoes (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     empresa_id UUID REFERENCES empresas(id) ON DELETE CASCADE NOT NULL,
     cliente_id UUID REFERENCES clientes(id) ON DELETE SET NULL,
     fornecedor_id UUID REFERENCES fornecedores(id) ON DELETE SET NULL,
@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS operacoes (
 
 -- Tabela de Rateio de Despesas
 CREATE TABLE IF NOT EXISTS despesas_operacao (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     operacao_id UUID REFERENCES operacoes(id) ON DELETE CASCADE NOT NULL,
     grupo_contas_id UUID REFERENCES grupos_contas(id) ON DELETE SET NULL,
     valor DECIMAL(15,2) NOT NULL,
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS despesas_operacao (
 
 -- Tabela de Cheques
 CREATE TABLE IF NOT EXISTS cheques (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     conta_bancaria_id UUID REFERENCES contas_bancarias(id) ON DELETE CASCADE NOT NULL,
     numero VARCHAR(50) NOT NULL,
     valor DECIMAL(15,2) NOT NULL,

@@ -3,7 +3,7 @@
 -- ============================================
 
 CREATE TABLE IF NOT EXISTS public.operacoes_ia_chat_sessions (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   session_key TEXT NOT NULL,
@@ -33,7 +33,7 @@ CREATE TRIGGER update_operacoes_ia_chat_sessions_updated_at
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TABLE IF NOT EXISTS public.operacoes_ia_chat_messages (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   session_id UUID NOT NULL REFERENCES public.operacoes_ia_chat_sessions(id) ON DELETE CASCADE,
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   role TEXT NOT NULL CHECK (role IN ('user', 'assistant')),

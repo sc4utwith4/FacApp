@@ -4,7 +4,7 @@
 
 -- 1) Tabela de Auditoria Operacional (Logs detalhados)
 CREATE TABLE IF NOT EXISTS public.bank_reconciliation_audit_log (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   extrato_import_id UUID REFERENCES public.extratos_import(id) ON DELETE SET NULL,
   extrato_transacao_id UUID REFERENCES public.extrato_transacoes(id) ON DELETE SET NULL,
@@ -35,7 +35,7 @@ CREATE POLICY "Users insert audit logs" ON public.bank_reconciliation_audit_log
 
 -- 2) Tabela de Sugestões de IA (Staging Area)
 CREATE TABLE IF NOT EXISTS public.bank_ai_suggestions (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   empresa_id UUID NOT NULL REFERENCES public.empresas(id) ON DELETE CASCADE,
   extrato_transacao_id UUID NOT NULL REFERENCES public.extrato_transacoes(id) ON DELETE CASCADE,
   
