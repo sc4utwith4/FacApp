@@ -1,0 +1,34 @@
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  
+  // Configuração de paths
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  
+  // Configuração de imagens
+  images: {
+    domains: [],
+    formats: ['image/avif', 'image/webp'],
+  },
+  
+  // Configuração experimental para melhor performance
+  experimental: {
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+  },
+  
+  // Configuração do Turbopack (Next.js 16+)
+  turbopack: {
+    // Configurações do Turbopack se necessário
+  },
+  
+  // Garantir que variáveis de ambiente sejam expostas
+  env: {
+    // Não é necessário aqui, NEXT_PUBLIC_ é automático
+    // Mas vamos garantir que não há problemas
+  },
+};
+
+export default nextConfig;
+

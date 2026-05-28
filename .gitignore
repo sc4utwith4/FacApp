@@ -1,0 +1,59 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+.env.test
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.vercel
+
+# Dados extraídos da migração (contém dados sensíveis)
+docs/migracao/dados_extraidos/
+docs/migracao/backups/
+scripts/migracao/*.json
+scripts/migracao/*.csv
+scripts/migracao/logs/
+docs/migracao/relatorios/*_log.txt
+docs/migracao/relatorios/*.log
+docs/migracao/validacao_resultados.json
+
+# HAR (contém requisições/respostas; resumo técnico fica em docs)
+DadosExtraidosPlataforma/*.har
+
+# Arquivos acidentais (ex: KEY="..." de comandos shell)
+/KEY=*
+
+# Dados de teste em migrations (CSV de conciliação)
+supabase/migrations/ConcialiaBancariaTestecsv/
+
+# Backups locais de workflow n8n (não versionar)
+workflows/*.backup.json
+
+# Artefatos locais de testes E2E (não versionar)
+playwright-report/
+test-results/

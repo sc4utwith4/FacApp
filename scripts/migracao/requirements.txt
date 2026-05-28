@@ -1,0 +1,17 @@
+# Dependências Python para extração de dados do Access (.mdb)
+
+# Opção 1: mdb-tools (recomendado para macOS/Linux)
+# Instalar via sistema: brew install mdb-tools (macOS) ou apt-get install mdb-tools (Linux)
+# Não requer instalação via pip
+
+# Opção 2: pyodbc (requer driver Access - nativo no Windows)
+# pyodbc>=4.0.39
+
+# Bibliotecas para manipulação de dados
+pandas>=2.0.0
+python-dotenv>=1.0.0
+
+# Utilitários
+tqdm>=4.66.0  # Barra de progresso
+# hashlib já está incluído no Python padrão, não precisa instalar
+

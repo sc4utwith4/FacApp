@@ -1,0 +1,6 @@
+-- Placeholder de historico remoto.
+--
+-- Esta versao consta como aplicada no Supabase remoto, mas o arquivo original nao
+-- existe no historico Git local/remoto disponivel. Mantemos este no-op para alinhar
+-- o versionamento do Supabase CLI sem executar qualquer alteracao no banco.
+-- Nao remover sem antes recuperar a migration original ou reparar o historico remoto.

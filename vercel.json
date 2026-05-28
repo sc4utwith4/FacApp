@@ -1,0 +1,157 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install --legacy-peer-deps --include=dev",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/api/disecurit-import",
+      "destination": "/api/disecurit?action=import"
+    },
+    {
+      "source": "/api/disecurit-reprocess",
+      "destination": "/api/disecurit?action=reprocess"
+    },
+    {
+      "source": "/api/disecurit-parse",
+      "destination": "/api/disecurit?action=parse"
+    },
+    {
+      "source": "/api/operacoes-ia/preview",
+      "destination": "/api/disecurit?action=operacoes-preview"
+    },
+    {
+      "source": "/api/operacoes-ia/confirm",
+      "destination": "/api/disecurit?action=operacoes-confirm"
+    },
+    {
+      "source": "/api/operacoes-ia/message",
+      "destination": "/api/disecurit?action=operacoes-message"
+    },
+    {
+      "source": "/api/operacoes-ia/history-event",
+      "destination": "/api/disecurit?action=operacoes-history-event"
+    },
+    {
+      "source": "/api/operacoes-ia/history",
+      "destination": "/api/disecurit?action=operacoes-history"
+    },
+    {
+      "source": "/api/operacoes-ia/chat/sessions",
+      "destination": "/api/disecurit?action=operacoes-chat-sessions"
+    },
+    {
+      "source": "/api/operacoes-ia/chat/messages",
+      "destination": "/api/disecurit?action=operacoes-chat-messages"
+    },
+    {
+      "source": "/api/bank-statement/conciliation/history",
+      "destination": "/api/bank-statement/chat/history"
+    },
+    {
+      "source": "/api/bank-statement/import/notice/ack",
+      "destination": "/api/bank-statement/import?action=notice-ack"
+    },
+    {
+      "source": "/api/bank-statement/reprocess",
+      "destination": "/api/bank-statement/import?action=reprocess"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/supabase/:path*",
+      "destination": "https://YOUR_PROJECT_REF.supabase.co/:path*"
+    },
+    {
+      "source": "/((?!api/|assets/|supabase/).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/dashboard",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/contas-bancarias",
+      "destination": "/contas-estoque",
+      "permanent": true
+    },
+    {
+      "source": "/estoque",
+      "destination": "/operacoes",
+      "permanent": true
+    },
+    {
+      "source": "/relatorios",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.js|.*\\.css)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.ico|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.svg|.*\\.webp|.*\\.woff|.*\\.woff2|.*\\.ttf|.*\\.otf)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "cleanUrls": false,
+  "trailingSlash": false
+}
