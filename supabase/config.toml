@@ -1,7 +1,7 @@
 # Configuração do projeto Supabase (CLI).
 # project_id é apenas um identificador LOCAL. Ao criar seu projeto novo,
 # rode:  supabase link --project-ref <SEU_PROJECT_REF>
-project_id = "assfac"
+project_id = "facapp"
 
 [api]
 enabled = true

@@ -64,7 +64,7 @@
     },
     {
       "source": "/supabase/:path*",
-      "destination": "https://YOUR_PROJECT_REF.supabase.co/:path*"
+      "destination": "https://nljaapgnuhjxiywzrknn.supabase.co/:path*"
     },
     {
       "source": "/((?!api/|assets/|supabase/).*)",
