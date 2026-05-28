@@ -95,7 +95,7 @@
     "jspdf": "^3.0.3",
     "jspdf-autotable": "^5.0.2",
     "lucide-react": "^0.462.0",
-    "next": "^16.0.1",
+    "next": "^16.2.6",
     "next-themes": "^0.3.0",
     "pdfjs-dist": "^5.4.530",
     "react": "^19.2.0",
