@@ -46,15 +46,18 @@ INSERT INTO ufs (codigo, nome) VALUES
 ('TO', 'Tocantins')
 ON CONFLICT (codigo) DO NOTHING;
 
--- 3. INSERIR EMPRESA PADRÃO (se não existir)
+-- 3. TENANT PADRÃO (slot em branco)
+-- Necessário estruturalmente: trigger de novo usuário, get_user_empresa_id() e
+-- seeds de grupos de contas referenciam este UUID. Sem identidade vinculada —
+-- preencha os dados ao implementar sua empresa.
 INSERT INTO empresas (id, nome, razao_social, cnpj, email, telefone, status)
 VALUES (
     '00000000-0000-0000-0000-000000000001'::UUID,
-    'ASSFAC Platform',
-    'ASSFAC Platform Ltda',
-    '12345678000190',
-    'contato@assfac.com.br',
-    '(11) 99999-9999',
+    'Minha Empresa',
+    NULL,
+    NULL,
+    NULL,
+    NULL,
     true
 )
 ON CONFLICT DO NOTHING;;

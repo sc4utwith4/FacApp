@@ -1,5 +1,5 @@
 -- ============================================
--- MIGRAÇÃO INICIAL - ASSFAC Platform
+-- MIGRAÇÃO INICIAL
 -- Criação completa do schema do banco de dados
 -- ============================================
 

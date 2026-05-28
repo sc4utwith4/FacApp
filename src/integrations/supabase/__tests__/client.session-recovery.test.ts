@@ -16,24 +16,24 @@ describe('supabase client session recovery internals', () => {
   });
 
   it('extrai project ref da URL Supabase', () => {
-    expect(__authSessionRecoveryInternals.getProjectRefFromUrl('https://zhsucbowsxfwmsrdvhre.supabase.co')).toBe(
-      'zhsucbowsxfwmsrdvhre'
+    expect(__authSessionRecoveryInternals.getProjectRefFromUrl('https://nljaapgnuhjxiywzrknn.supabase.co')).toBe(
+      'nljaapgnuhjxiywzrknn'
     );
     expect(__authSessionRecoveryInternals.getProjectRefFromUrl('invalid-url')).toBeNull();
   });
 
   it('resolve URL do browser: Vercel usa proxy same-origin quando useProxy', () => {
-    const direct = 'https://zhsucbowsxfwmsrdvhre.supabase.co';
+    const direct = 'https://nljaapgnuhjxiywzrknn.supabase.co';
     const fakeWin = {
-      location: { origin: 'https://assfac-plataforma.vercel.app', hostname: 'assfac-plataforma.vercel.app' },
+      location: { origin: 'https://minha-app.vercel.app', hostname: 'minha-app.vercel.app' },
     } as Window;
     expect(
       __authSessionRecoveryInternals.resolveSupabaseUrlForBrowser(direct, { window: fakeWin, useProxy: true })
-    ).toBe('https://assfac-plataforma.vercel.app/supabase');
+    ).toBe('https://minha-app.vercel.app/supabase');
   });
 
   it('resolve URL do browser: localhost mantém URL direta do Supabase', () => {
-    const direct = 'https://zhsucbowsxfwmsrdvhre.supabase.co';
+    const direct = 'https://nljaapgnuhjxiywzrknn.supabase.co';
     const fakeWin = {
       location: { origin: 'http://localhost:8080', hostname: 'localhost' },
     } as Window;
@@ -43,7 +43,7 @@ describe('supabase client session recovery internals', () => {
   });
 
   it('remove apenas chaves de auth do projeto no local/session storage', () => {
-    const ref = 'zhsucbowsxfwmsrdvhre';
+    const ref = 'nljaapgnuhjxiywzrknn';
     localStorage.setItem(`sb-${ref}-auth-token`, '{"foo":"bar"}');
     localStorage.setItem('other-key', 'keep');
     sessionStorage.setItem(`sb-${ref}-auth-token`, '{"foo":"bar"}');

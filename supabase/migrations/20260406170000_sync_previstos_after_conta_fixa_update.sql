@@ -119,28 +119,36 @@ BEGIN
 END;
 $$;
 
-UPDATE public.lancamentos_previstos AS lp
-SET
-    conta_bancaria_id = cf.conta_bancaria_id,
-    grupo_contas_id = cf.grupo_contas_id,
-    historico = cf.descricao,
-    observacoes = cf.observacoes,
-    valor = cf.valor,
-    tipo = cf.natureza,
-    updated_at = NOW()
-FROM public.contas_fixas AS cf
-WHERE lp.fixa_id = cf.id
-  AND lp.empresa_id = cf.empresa_id
-  AND lp.status <> 'pago'
-  AND lp.vencimento >= CURRENT_DATE
-  AND (
-    lp.conta_bancaria_id IS DISTINCT FROM cf.conta_bancaria_id
-    OR lp.grupo_contas_id IS DISTINCT FROM cf.grupo_contas_id
-    OR lp.historico IS DISTINCT FROM cf.descricao
-    OR lp.observacoes IS DISTINCT FROM cf.observacoes
-    OR lp.valor IS DISTINCT FROM cf.valor
-    OR lp.tipo IS DISTINCT FROM cf.natureza
-  );
+-- Backfill best-effort: em banco novo as tabelas podem ainda não existir.
+DO $$
+BEGIN
+    UPDATE public.lancamentos_previstos AS lp
+    SET
+        conta_bancaria_id = cf.conta_bancaria_id,
+        grupo_contas_id = cf.grupo_contas_id,
+        historico = cf.descricao,
+        observacoes = cf.observacoes,
+        valor = cf.valor,
+        tipo = cf.natureza,
+        updated_at = NOW()
+    FROM public.contas_fixas AS cf
+    WHERE lp.fixa_id = cf.id
+      AND lp.empresa_id = cf.empresa_id
+      AND lp.status <> 'pago'
+      AND lp.vencimento >= CURRENT_DATE
+      AND (
+        lp.conta_bancaria_id IS DISTINCT FROM cf.conta_bancaria_id
+        OR lp.grupo_contas_id IS DISTINCT FROM cf.grupo_contas_id
+        OR lp.historico IS DISTINCT FROM cf.descricao
+        OR lp.observacoes IS DISTINCT FROM cf.observacoes
+        OR lp.valor IS DISTINCT FROM cf.valor
+        OR lp.tipo IS DISTINCT FROM cf.natureza
+      );
+EXCEPTION WHEN undefined_table THEN
+    RAISE NOTICE 'Skipped backfill sync previstos: tabela ainda não existe';
+WHEN OTHERS THEN
+    RAISE NOTICE 'Skipped backfill sync previstos: %', SQLERRM;
+END $$;
 
 GRANT EXECUTE ON FUNCTION public.atualizar_conta_fixa(
     BIGINT, TEXT, TEXT, UUID, UUID, TEXT, SMALLINT, SMALLINT, NUMERIC, BOOLEAN, TEXT, SMALLINT, TEXT

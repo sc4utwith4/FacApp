@@ -2,7 +2,7 @@
 
 ## Como Aplicar
 
-1. Acesse o Supabase Dashboard: https://app.supabase.com/project/zhsucbowsxfwmsrdvhre
+1. Acesse o Supabase Dashboard: https://app.supabase.com/project/nljaapgnuhjxiywzrknn
 2. Vá para SQL Editor
 3. Cole o conteúdo do arquivo `create_estoque_tables.sql`
 4. Execute o script
