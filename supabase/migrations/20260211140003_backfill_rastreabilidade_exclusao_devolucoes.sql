@@ -148,5 +148,7 @@ BEGIN
         AND lancamento_destino_id IS NULL;
     END IF;
   END LOOP;
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'Skipped backfill rastreabilidade: %', SQLERRM;
 END
 $$;

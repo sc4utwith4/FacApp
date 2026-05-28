@@ -78,8 +78,15 @@ BEGIN
   RAISE NOTICE 'Backfill: % vínculos criados em devolucoes_transferencias', total_inseridos;
 END $$;
 -- Expandir coluna status se necessário ('parcialmente_transferida' = 24 caracteres)
-ALTER TABLE public.devolucoes_estoque
-  ALTER COLUMN status TYPE VARCHAR(30);
+DO $$
+BEGIN
+  ALTER TABLE public.devolucoes_estoque
+    ALTER COLUMN status TYPE VARCHAR(30);
+EXCEPTION WHEN undefined_column THEN
+  RAISE NOTICE 'Skipped ALTER COLUMN status: column does not exist yet';
+WHEN OTHERS THEN
+  RAISE NOTICE 'Skipped ALTER COLUMN status: %', SQLERRM;
+END $$;
 -- Recalcular status de todas as devoluções
 DO $$
 DECLARE
@@ -91,4 +98,6 @@ BEGIN
     v_status := atualizar_status_devolucao(dev_rec.id);
   END LOOP;
   RAISE NOTICE 'Status de devoluções recalculado';
+EXCEPTION WHEN OTHERS THEN
+  RAISE NOTICE 'Skipped recalc status: %', SQLERRM;
 END $$;
